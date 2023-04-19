@@ -8,11 +8,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
 @Entity
-@Table(name = "application")
+@Table(name = "applications")
 public class Application {
 
   public Application(long id, String name, String whatsappString, String frontEndExp, int frontEndExpYears,
-    String backEndExp, int backEndExpYears, String dbEndExp, int dbEndExpYears, boolean camundaExp,
+    String backEndExp, int backEndExpYears, String dbExp, int dbExpYears, boolean camundaExp,
     boolean healthcareExp, String comments) {
     this.id = id;
     this.name = name;
@@ -21,8 +21,8 @@ public class Application {
     this.frontEndExpYears = frontEndExpYears;
     this.backEndExp = backEndExp;
     this.backEndExpYears = backEndExpYears;
-    this.dbEndExp = dbEndExp;
-    this.dbEndExpYears = dbEndExpYears;
+    this.dbExp = dbExp;
+    this.dbExpYears = dbExpYears;
     this.camundaExp = camundaExp;
     this.healthcareExp = healthcareExp;
     this.comments = comments;
@@ -51,10 +51,10 @@ public class Application {
   private int backEndExpYears;
 
   @Column(length = 255, nullable = false)
-  private String dbEndExp;
+  private String dbExp;
 
   @Column(nullable = false)
-  private int dbEndExpYears;
+  private int dbExpYears;
 
   @Column(nullable = false)
   private boolean camundaExp;
@@ -125,20 +125,20 @@ public class Application {
     this.backEndExpYears = backEndExpYears;
   }
 
-  public String getDbEndExp() {
-    return dbEndExp;
+  public String getDbExp() {
+    return dbExp;
   }
 
-  public void setDbEndExp(String dbEndExp) {
-    this.dbEndExp = dbEndExp;
+  public void setDbExp(String dbEndExp) {
+    this.dbExp = dbEndExp;
   }
 
-  public int getDbEndExpYears() {
-    return dbEndExpYears;
+  public int getDbExpYears() {
+    return dbExpYears;
   }
 
-  public void setDbEndExpYears(int dbEndExpYears) {
-    this.dbEndExpYears = dbEndExpYears;
+  public void setDbExpYears(int dbEndExpYears) {
+    this.dbExpYears = dbEndExpYears;
   }
 
   public boolean isCamundaExp() {
