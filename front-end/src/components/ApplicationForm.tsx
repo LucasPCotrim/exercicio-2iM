@@ -131,9 +131,11 @@ function ApplicationForm() {
         <FormSection>
           <div className='section-title'>Comentários</div>
           <InputWrapper>
-            <textarea id='w3review' name='w3review' rows={4} cols={50}>
-              Teste
-            </textarea>
+            <textarea
+              id='w3review'
+              name='w3review'
+              rows={4}
+              cols={50}></textarea>
           </InputWrapper>
         </FormSection>
         <button>Enviar</button>
@@ -204,10 +206,13 @@ const InputWrapper = styled.div`
   }
   > input[type='radio'] {
     margin: 15px;
+    cursor: pointer;
+    width: 20px;
   }
   > input[type='number'] {
     border-radius: 8px;
     height: 30px;
+    width: 90px;
     padding-left: 10px;
     box-shadow: 0px 0px 6px 4px #00000028;
   }
