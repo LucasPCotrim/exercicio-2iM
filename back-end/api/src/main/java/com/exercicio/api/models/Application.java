@@ -5,10 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 import jakarta.persistence.Column;
+
 
 @Entity
 @Table(name = "applications")
+@NoArgsConstructor
 public class Application {
 
   public Application(long id, String name, String whatsappString, String frontEndExp, int frontEndExpYears,
