@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
+
+import com.exercicio.api.dtos.ApplicationDTO;
+
 import jakarta.persistence.Column;
 
 
@@ -14,58 +17,56 @@ import jakarta.persistence.Column;
 @NoArgsConstructor
 public class Application {
 
-  public Application(long id, String name, String whatsappString, String frontEndExp, int frontEndExpYears,
-    String backEndExp, int backEndExpYears, String dbExp, int dbExpYears, boolean camundaExp,
-    boolean healthcareExp, String comments) {
-    this.id = id;
-    this.name = name;
-    this.whatsappString = whatsappString;
-    this.frontEndExp = frontEndExp;
-    this.frontEndExpYears = frontEndExpYears;
-    this.backEndExp = backEndExp;
-    this.backEndExpYears = backEndExpYears;
-    this.dbExp = dbExp;
-    this.dbExpYears = dbExpYears;
-    this.camundaExp = camundaExp;
-    this.healthcareExp = healthcareExp;
-    this.comments = comments;
+  public Application(ApplicationDTO req) {
+    this.name = req.name();
+    this.whatsappString = req.whatsappString();
+    this.frontEndExp = req.frontEndExp().getDescription();
+    this.frontEndExpYears = req.frontEndExpYears();
+    this.backEndExp = req.backEndExp().getDescription();
+    this.backEndExpYears = req.backEndExpYears();
+    this.dbExp = req.dbExp().getDescription();
+    this.dbExpYears = req.dbExpYears();
+    this.camundaExp = req.camundaExp();
+    this.healthcareExp = req.healthcareExp();
+    this.comments = req.comments();
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", updatable = false, nullable = false)
   private long id;
 
-  @Column(length = 255, nullable = false)
+  @Column(name = "name", length = 255, nullable = false)
   private String name;
 
-  @Column(length = 16, nullable = false)
+  @Column(name = "whatsappString", length = 16, nullable = false)
   private String whatsappString;
 
-  @Column(length = 255, nullable = false)
+  @Column(name = "frontEndExp", length = 255, nullable = false)
   private String frontEndExp;
 
-  @Column(nullable = false)
+  @Column(name = "frontEndExpYears", nullable = false)
   private int frontEndExpYears;
 
-  @Column(length = 255, nullable = false)
+  @Column(name = "backEndExp", length = 255, nullable = false)
   private String backEndExp;
 
-  @Column(nullable = false)
+  @Column(name = "backEndExpYears", nullable = false)
   private int backEndExpYears;
 
-  @Column(length = 255, nullable = false)
+  @Column(name = "dbExp", length = 255, nullable = false)
   private String dbExp;
 
-  @Column(nullable = false)
+  @Column(name = "dbExpYears", nullable = false)
   private int dbExpYears;
 
-  @Column(nullable = false)
+  @Column(name = "camundaExp", nullable = false)
   private boolean camundaExp;
 
-  @Column(nullable = false)
+  @Column(name = "healthcareExp", nullable = false)
   private boolean healthcareExp;
 
-  @Column(length = 511, nullable = false)
+  @Column(name = "comments", length = 511, nullable = false)
   private String comments;
 
 
