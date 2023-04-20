@@ -147,7 +147,8 @@ const Global = css`
     color: var(--secundary-color);
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
-    input:focus {
+    input:focus,
+    textarea:focus {
       outline: none;
     }
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
