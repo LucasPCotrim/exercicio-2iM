@@ -14,7 +14,7 @@ import com.exercicio.api.models.Application;
 import com.exercicio.api.services.ApplicationService;
 
 @RestController
-@RequestMapping("/application")
+@RequestMapping("/applications")
 public class ApplicationController {
   
   @Autowired
