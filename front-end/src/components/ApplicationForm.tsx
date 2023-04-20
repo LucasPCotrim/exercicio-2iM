@@ -1,20 +1,117 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { applicationApi } from '../services/applicationApi';
+import { useMutation } from 'react-query';
+import LoadingScreen from './LoadingScreen';
 
-function ApplicationForm() {
+export type formType = {
+  name: string;
+  whatsapp: string;
+  frontEndExp: string;
+  frontEndExpYears: number;
+  backEndExp: string;
+  backEndExpYears: number;
+  dbExp: string;
+  dbExpYears: number;
+  camundaExp: boolean;
+  healthcareExp: boolean;
+  comments: string;
+};
+
+export default function ApplicationForm() {
+  const submitApplicationState = useMutation((form: formType) => {
+    return applicationApi.submitApplication(form);
+  });
+
+  const [form, setForm] = useState({
+    name: '',
+    whatsapp: '',
+    frontEndExp: '',
+    frontEndExpYears: 0,
+    backEndExp: '',
+    backEndExpYears: 0,
+    dbExp: '',
+    dbExpYears: 0,
+    camundaExp: false,
+    healthcareExp: false,
+    comments: '',
+  });
+  const handleForm = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
+    console.log(form);
+  };
+  const handleRadioButton = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    name: string,
+    value: string | boolean
+  ) => {
+    setForm({
+      ...form,
+      [name]: value,
+    });
+    console.log(form);
+  };
+  const clearForm = () => {
+    setForm({
+      name: '',
+      whatsapp: '',
+      frontEndExp: '',
+      frontEndExpYears: 0,
+      backEndExp: '',
+      backEndExpYears: 0,
+      dbExp: '',
+      dbExpYears: 0,
+      camundaExp: false,
+      healthcareExp: false,
+      comments: '',
+    });
+  };
+  const executeSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submitApplicationState.mutate(form);
+    clearForm();
+  };
+
+  if (submitApplicationState.isLoading) {
+    return (
+      <>
+        <LoadingScreen message={'Loading...'} />
+      </>
+    );
+  }
+
   return (
     <>
-      <ApplicationFormStyle>
+      <ApplicationFormStyle onSubmit={executeSubmit}>
         <div className='form-title'>Processo Seletivo</div>
 
         <FormSection>
           <div className='section-title'>Dados Pessoais</div>
           <InputWrapper>
             <h2>Nome</h2>
-            <input type='text' name='name' />
+            <input
+              type='text'
+              name='name'
+              value={form.name}
+              onChange={handleForm}
+            />
           </InputWrapper>
           <InputWrapper>
             <h2>Whatsapp</h2>
-            <input type='text' name='whatsapp' />
+            <input
+              type='text'
+              name='whatsapp'
+              value={form.whatsapp}
+              onChange={handleForm}
+              placeholder='(xx) xxxxx-xxxx'
+            />
           </InputWrapper>
         </FormSection>
 
@@ -27,26 +124,55 @@ function ApplicationForm() {
             <input
               type='radio'
               name='expLevelFrontEnd'
-              id='Nenhuma Experiência'
+              id='Nenhuma experiência'
+              checked={form.frontEndExp === 'Nenhuma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'frontEndExp', 'Nenhuma experiência')
+              }
             />
-            <label htmlFor='Nenhuma Experiência'>Nenhuma Experiência</label>
+            <label htmlFor='Nenhuma Experiência'>Nenhuma experiência</label>
 
             <input
               type='radio'
               name='expLevelFrontEnd'
-              id='Alguma Experiência'
+              id='Alguma experiência'
+              checked={form.frontEndExp === 'Alguma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'frontEndExp', 'Alguma experiência')
+              }
             />
-            <label htmlFor='Alguma Experiência'>Alguma Experiência</label>
+            <label htmlFor='Alguma experiência'>Alguma experiência</label>
 
-            <input type='radio' name='expLevelFrontEnd' id='Experiente' />
+            <input
+              type='radio'
+              name='expLevelFrontEnd'
+              id='Experiente'
+              checked={form.frontEndExp === 'Experiente'}
+              onChange={(e) =>
+                handleRadioButton(e, 'frontEndExp', 'Experiente')
+              }
+            />
             <label htmlFor='Experiente'>Experiente</label>
 
-            <input type='radio' name='expLevelFrontEnd' id='Muito Experiente' />
-            <label htmlFor='Muito Experiente'>Muito Experiente</label>
+            <input
+              type='radio'
+              name='expLevelFrontEnd'
+              id='Muito experiente'
+              checked={form.frontEndExp === 'Muito experiente'}
+              onChange={(e) =>
+                handleRadioButton(e, 'frontEndExp', 'Muito experiente')
+              }
+            />
+            <label htmlFor='Muito Experiente'>Muito experiente</label>
           </InputWrapper>
           <InputWrapper>
             <h2>Anos de Experiência</h2>
-            <input type='number' name='expYears' />
+            <input
+              type='number'
+              name='frontEndExpYears'
+              value={form.frontEndExpYears}
+              onChange={handleForm}
+            />
           </InputWrapper>
         </FormSection>
 
@@ -59,26 +185,53 @@ function ApplicationForm() {
             <input
               type='radio'
               name='expLevelBackEnd'
-              id='Nenhuma Experiência'
+              id='Nenhuma experiência'
+              checked={form.backEndExp === 'Nenhuma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'backEndExp', 'Nenhuma experiência')
+              }
             />
-            <label htmlFor='Nenhuma Experiência'>Nenhuma Experiência</label>
+            <label htmlFor='Nenhuma experiência'>Nenhuma Experiência</label>
 
             <input
               type='radio'
               name='expLevelBackEnd'
-              id='Alguma Experiência'
+              id='Alguma experiência'
+              checked={form.backEndExp === 'Alguma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'backEndExp', 'Alguma experiência')
+              }
             />
-            <label htmlFor='Alguma Experiência'>Alguma Experiência</label>
+            <label htmlFor='Alguma experiência'>Alguma Experiência</label>
 
-            <input type='radio' name='expLevelBackEnd' id='Experiente' />
+            <input
+              type='radio'
+              name='expLevelBackEnd'
+              id='Experiente'
+              checked={form.backEndExp === 'Experiente'}
+              onChange={(e) => handleRadioButton(e, 'backEndExp', 'Experiente')}
+            />
             <label htmlFor='Experiente'>Experiente</label>
 
-            <input type='radio' name='expLevelBackEnd' id='Muito Experiente' />
-            <label htmlFor='Muito Experiente'>Muito Experiente</label>
+            <input
+              type='radio'
+              name='expLevelBackEnd'
+              id='Muito experiente'
+              checked={form.backEndExp === 'Muito experiente'}
+              onChange={(e) =>
+                handleRadioButton(e, 'backEndExp', 'Muito experiente')
+              }
+            />
+            <label htmlFor='Muito experiente'>Muito Experiente</label>
           </InputWrapper>
           <InputWrapper>
             <h2>Anos de Experiência</h2>
-            <input type='number' name='expYears' />
+            <input
+              type='number'
+              name='backEndExpYears'
+              value={form.backEndExpYears}
+              onChange={handleForm}
+            />
           </InputWrapper>
         </FormSection>
 
@@ -88,21 +241,56 @@ function ApplicationForm() {
             Quando falamos de banco de dados, meu nível de experiência é:
           </p>
           <InputWrapper>
-            <input type='radio' name='expLevelDb' id='Nenhuma Experiência' />
-            <label htmlFor='Nenhuma Experiência'>Nenhuma Experiência</label>
+            <input
+              type='radio'
+              name='expLevelDb'
+              id='Nenhuma experiência'
+              checked={form.dbExp === 'Nenhuma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'dbExp', 'Nenhuma experiência')
+              }
+            />
+            <label htmlFor='Nenhuma experiência'>Nenhuma experiência</label>
 
-            <input type='radio' name='expLevelDb' id='Alguma Experiência' />
-            <label htmlFor='Alguma Experiência'>Alguma Experiência</label>
+            <input
+              type='radio'
+              name='expLevelDb'
+              id='Alguma experiência'
+              checked={form.dbExp === 'Alguma experiência'}
+              onChange={(e) =>
+                handleRadioButton(e, 'dbExp', 'Alguma experiência')
+              }
+            />
+            <label htmlFor='Alguma experiência'>Alguma experiência</label>
 
-            <input type='radio' name='expLevelDb' id='Experiente' />
+            <input
+              type='radio'
+              name='expLevelDb'
+              id='Experiente'
+              checked={form.dbExp === 'Experiente'}
+              onChange={(e) => handleRadioButton(e, 'dbExp', 'Experiente')}
+            />
             <label htmlFor='Experiente'>Experiente</label>
 
-            <input type='radio' name='expLevelDb' id='Muito Experiente' />
-            <label htmlFor='Muito Experiente'>Muito Experiente</label>
+            <input
+              type='radio'
+              name='expLevelDb'
+              id='Muito experiente'
+              checked={form.dbExp === 'Muito experiente'}
+              onChange={(e) =>
+                handleRadioButton(e, 'dbExp', 'Muito experiente')
+              }
+            />
+            <label htmlFor='Muito experiente'>Muito experiente</label>
           </InputWrapper>
           <InputWrapper>
             <h2>Anos de Experiência</h2>
-            <input type='number' name='expYears' />
+            <input
+              type='number'
+              name='dbExpYears'
+              value={form.dbExpYears}
+              onChange={handleForm}
+            />
           </InputWrapper>
         </FormSection>
 
@@ -111,19 +299,43 @@ function ApplicationForm() {
           <p className='description'>Possuo conhecimento ou experiência em:</p>
           <InputWrapper>
             <h2>Camunda</h2>
-            <input type='radio' name='expBoolCamunda' id='Sim' />
+            <input
+              type='radio'
+              name='camundaExp'
+              id='Sim'
+              checked={form.camundaExp}
+              onChange={(e) => handleRadioButton(e, 'camundaExp', true)}
+            />
             <label htmlFor='Sim'>Sim</label>
 
-            <input type='radio' name='expBoolCamunda' id='Não' />
+            <input
+              type='radio'
+              name='camundaExp'
+              id='Não'
+              checked={!form.camundaExp}
+              onChange={(e) => handleRadioButton(e, 'camundaExp', false)}
+            />
             <label htmlFor='Não'>Não</label>
           </InputWrapper>
 
           <InputWrapper>
             <h2>Mercado de Saúde</h2>
-            <input type='radio' name='expBoolHealth' id='Sim' />
+            <input
+              type='radio'
+              name='heathcareExp'
+              id='Sim'
+              checked={form.healthcareExp}
+              onChange={(e) => handleRadioButton(e, 'healthcareExp', true)}
+            />
             <label htmlFor='Sim'>Sim</label>
 
-            <input type='radio' name='expBoolHealth' id='Não' />
+            <input
+              type='radio'
+              name='heathcareExp'
+              id='Não'
+              checked={!form.healthcareExp}
+              onChange={(e) => handleRadioButton(e, 'healthcareExp', true)}
+            />
             <label htmlFor='Não'>Não</label>
           </InputWrapper>
         </FormSection>
@@ -132,10 +344,12 @@ function ApplicationForm() {
           <div className='section-title'>Comentários</div>
           <InputWrapper>
             <textarea
-              id='w3review'
-              name='w3review'
+              id='comments'
+              name='comments'
               rows={4}
-              cols={50}></textarea>
+              cols={50}
+              value={form.comments}
+              onChange={handleForm}></textarea>
           </InputWrapper>
         </FormSection>
         <button>Enviar</button>
@@ -143,8 +357,6 @@ function ApplicationForm() {
     </>
   );
 }
-
-export default ApplicationForm;
 
 const ApplicationFormStyle = styled.form`
   width: min(80%, 700px);

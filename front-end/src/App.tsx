@@ -1,14 +1,17 @@
 import GlobalStyle from './assets/GlobalStyle';
 import HomePage from './components/HomePage';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
-function App() {
+const queryClient = new QueryClient();
+
+export default function App() {
   return (
     <>
       <GlobalStyle />
-      <HomePage />
+      <QueryClientProvider client={queryClient}>
+        <HomePage />
+      </QueryClientProvider>
     </>
   );
 }
-
-export default App;
 
