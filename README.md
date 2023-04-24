@@ -3,7 +3,7 @@
 O objetivo deste exercício é implementar uma aplicação para submissão de aplicações para um processo seletivo.
 A aplicação deve conter um formulário na interface com usuário, que se comunica com uma API back-end que por sua vez se comunica com um banco de dados e com o Camunda para armazenar as candidaturas
 
-
+<img src="https://github.com/LucasPCotrim/exercicio-2iM/blob/main/read-me-files/HomePage.png" />
 
 ## Como executar este projeto?
 
